@@ -1,0 +1,35 @@
+services:
+  php:
+    container_name: "${COMPOSE_PROJECT_NAME}_php"
+    build: "./docker/php/"
+    user: "1000:1000"
+    volumes:
+      - "./:/var/www/html"
+    environment:
+      - PHP_IDE_CONFIG=serverName=${HOST_NAME}
+  nginx:
+    container_name: "${COMPOSE_PROJECT_NAME}_nginx"
+    image: "nginx"
+    volumes:
+      - "./:/var/www/html"
+      - "./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf"
+    ports:
+      - "80:80"
+    environment:
+      - DEV_DOMAIN=${DEV_DOMAIN}
+      - DEV_CERT=${DEV_CERT}
+      - DEV_KEY=${DEV_KEY}
+    depends_on:
+      - php
+  mysql:
+    container_name: "${COMPOSE_PROJECT_NAME}_mysql"
+    image: "mysql:8.0"
+    volumes:
+      - "./docker/mysql/temp:/var/lib/mysql"
+    ports:
+      - "3333:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: app
+      MYSQL_USER: user
+      MYSQL_PASSWORD: user
