@@ -1,14 +1,12 @@
 <?php
+declare(strict_types=1);
 
-require '../vendor/autoload.php';
-use Smarty\Smarty;
-$smarty = new Smarty();
+use App\App;
 
-$smarty->setTemplateDir('../tpl/');
-$smarty->setCompileDir('../tpl/compiled/');
-$smarty->setConfigDir('../tpl/config/');
-$smarty->setCacheDir('../tpl/cache/');
-$smarty->setEscapeHtml(true);
-$smarty->testInstall();
+require_once __DIR__ . '/../vendor/autoload.php';
 
-$smarty->display('index.tpl');
+session_start();
+
+$app = new App();
+
+$app->route();
