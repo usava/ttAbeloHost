@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use PDO;
+
 class Post extends Model
 {
     public int $id {
@@ -60,6 +62,7 @@ class Post extends Model
     public function get(int $id)
     {
         $hSql = $this->db()->prepare("SELECT * FROM posts WHERE id = :id");
+        $hSql->setFetchMode(PDO::FETCH_CLASS, Post::class);
         $hSql->execute([':id' => $id]);
         return $hSql->fetch();
     }
@@ -85,5 +88,15 @@ class Post extends Model
         $sql->execute($prepare);
 
         return $sql->fetchAll();
+    }
+
+    public function getCategory(): Category
+    {
+        $sql = $this->db()->prepare("
+            SELECT category_id FROM category_posts AS cp
+            WHERE post_id = :post_id LIMIT 1");
+        $sql->execute([':post_id' => $this->id]);
+        $cid = (int) $sql->fetch(PDO::FETCH_NUM)[0];
+        return new Category()->get($cid);
     }
 }

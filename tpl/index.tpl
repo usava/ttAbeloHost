@@ -5,7 +5,7 @@
 </head>
 <body>
     <main class="container">
-        <h1>Bloggy</h1>
+        <h1><a href="/">Bloggy</a></h1>
         {foreach $categories as $category}
         <section class="category-section">
             <div class="category-header">

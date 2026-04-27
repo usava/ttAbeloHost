@@ -48,7 +48,7 @@ class Category extends Model
         $prepare[':offset'] = isset($filter['page']) ? ((int) $filter['page'] - 1) * $_ENV['POSTS_PAGE_LIMIT'] : 0;
         $prepare[':category_id'] = $this->id;
 
-        $orderBy = match($filter['sort']) {
+        $orderBy = match($filter['sort'] ?? 'created-desc') {
             'views-asc' => 'p.views ASC',
             'views-desc' => 'p.views DESC',
             'created-asc' => 'p.created_at ASC',

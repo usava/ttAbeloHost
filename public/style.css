@@ -1,8 +1,15 @@
 .container {
   max-width: 100%;
   margin: 0 auto;
-  padding: 40px 20px;
+  padding: 0 20px;
   font-family: "Arial", sans-serif;
+}
+.container h1 > a {
+  text-decoration: none;
+}
+.container h1 > a:hover {
+  color: #333;
+  text-decoration: none;
 }
 
 .posts-grid {

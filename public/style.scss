@@ -9,6 +9,14 @@ $container-width: 100%;
   margin: 0 auto;
   padding: 0 20px;
   font-family: $font-main;
+
+  h1 > a {
+    text-decoration: none;
+    &:hover {
+      color: $color-text;
+      text-decoration: none;
+    }
+  }
 }
 
 .posts-grid {

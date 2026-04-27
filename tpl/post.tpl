@@ -5,20 +5,42 @@
 </head>
 <body>
     <main class="container">
-        <h1>{$post->title}</h1>
+        <h1><a href="/">Bloggy</a></h1>
+        <section>
+            <h2>{$post->title}</h2>
 
-        <article class="post-card">
-            <div class="post-image">
-                <img src="/assets/{$post->image}" alt="{$post->title}">
+            <article class="post-card">
+                <div class="post-image">
+                    <img src="/assets/{$post->image}" alt="{$post->title}">
+                </div>
+                <div class="post-content">
+                    <h3 class="post-title">{$post->title}</h3>
+                    <time class="post-date">{$post->created_at|date_format:"%B %e, %Y"}</time>
+                    <p class="post-excerpt">
+                        {$post->text|escape}
+                    </p>
+                </div>
+            </article>
+        </section>
+        <div class="similar-posts">
+            <div class="posts-grid">
+                {foreach $category->getPosts(['limit' => 3]) as $post}
+                    <article class="post-card">
+                        <div class="post-image">
+                            <img src="/assets/{$post->image}" alt="{$post->title}">
+                        </div>
+                        <div class="post-content">
+                            <h3 class="post-title">{$post->title}</h3>
+                            <time class="post-date">{$post->created_at|date_format:"%B %e, %Y"}</time>
+                            <p class="post-excerpt">
+                                {$post->description|truncate:150:"..."}
+                            </p>
+                            <a href="/post/{$post->id}" class="continue-reading">Continue Reading</a>
+                        </div>
+                    </article>
+                {/foreach}
             </div>
-            <div class="post-content">
-                <h3 class="post-title">{$post->title}</h3>
-                <time class="post-date">{$post->created_at|date_format:"%B %e, %Y"}</time>
-                <p class="post-excerpt">
-                    {$post->text|escape}
-                </p>
-            </div>
-        </article>
+        </div>
     </main>
 </body>
 </html>
