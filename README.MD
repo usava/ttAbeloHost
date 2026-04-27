@@ -8,7 +8,7 @@ Test Task for AbeloHost
    docker-compose up -d
    ```
 
-3. Configure SSL and hosts file:
+3. Configure hosts file:
     - Add to /etc/hosts: `127.0.0.1 ttahost.loc`
 
 
