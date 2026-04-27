@@ -1,6 +1,7 @@
 <html lang="en">
 <head>
     <title>{$post->title}</title>
+    <link type="text/css" href="/style.scss" rel="stylesheet">
 </head>
 <body>
     <main class="container">
@@ -8,7 +9,7 @@
 
         <article class="post-card">
             <div class="post-image">
-                <img src="assets/{$post->image}" alt="{$post->title}">
+                <img src="/assets/{$post->image}" alt="{$post->title}">
             </div>
             <div class="post-content">
                 <h3 class="post-title">{$post->title}</h3>

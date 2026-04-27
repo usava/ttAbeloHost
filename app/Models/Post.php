@@ -82,8 +82,8 @@ class Post extends Model
             ORDER BY p.id DESC
             LIMIT :limit");
 
-        $hSql = $sql->execute($prepare);
+        $sql->execute($prepare);
 
-        return $hSql->fetchAll();
+        return $sql->fetchAll();
     }
 }

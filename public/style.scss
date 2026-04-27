@@ -97,3 +97,25 @@ $container-width: 1100px;
     }
   }
 }
+
+.control-container {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  padding: 10px 0;
+  gap: 10px;
+
+  label {
+    font-size: 1.3rem;
+    color: $color-text;
+    white-space: nowrap;
+  }
+
+  select {
+    margin-right: 10px;
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: #fff;
+  }
+}

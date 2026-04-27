@@ -8,7 +8,7 @@ class PostController extends Controller
 {
     public function show(int $id)
     {
-        $post = new Post()->getPost($id);
+        $post = new Post()->get($id);
 
         $this->view->smarty->assign('post', $post);
         $this->view->smarty->display('post.tpl');

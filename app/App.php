@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App;
 
+use App\Controllers\CategoryController;
 use App\Controllers\IndexController;
 use App\Controllers\PostController;
 
@@ -32,5 +33,6 @@ class App
     {
         $this->router->add('/', IndexController::class, 'index');
         $this->router->add('/post/{id}', PostController::class, 'show');
+        $this->router->add('/category/{id}', CategoryController::class, 'show');
     }
 }
