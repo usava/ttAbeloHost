@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App;
 
 use App\Controllers\IndexController;
+use App\Controllers\PostController;
 
 class App
 {
@@ -30,5 +31,6 @@ class App
     private function initRoutes(): void
     {
         $this->router->add('/', IndexController::class, 'index');
+        $this->router->add('/post/{id}', PostController::class, 'show');
     }
 }

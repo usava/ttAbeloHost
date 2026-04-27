@@ -48,6 +48,15 @@ class Post extends Model
         }
     }
 
+    private string $created_at {
+        get {
+            return $this->created_at;
+        }
+        set {
+            $this->created_at = $value;
+        }
+    }
+
     public function getPost(int $id)
     {
         $hSql = $this->db()->prepare("SELECT * FROM posts WHERE id = :id");

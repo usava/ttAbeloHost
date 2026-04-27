@@ -1,11 +1,10 @@
 <html lang="en">
 <head>
-    <title>Bloggy</title>
-    <link type="text/css" href="assets/css/style.scss" rel="stylesheet">
+    <title>{$post->title}</title>
 </head>
 <body>
     <main class="container">
-        <h1>Bloggy</h1>
+        <h1>{$post->title}</h1>
 
         <article class="post-card">
             <div class="post-image">
@@ -15,9 +14,8 @@
                 <h3 class="post-title">{$post->title}</h3>
                 <time class="post-date">{$post->created_at|date_format:"%B %e, %Y"}</time>
                 <p class="post-excerpt">
-                    {$post->description|truncate:150:"..."}
+                    {$post->text|escape}
                 </p>
-                <a href="/post/{$post->id}" class="continue-reading">Continue Reading</a>
             </div>
         </article>
     </main>
