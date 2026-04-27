@@ -2,15 +2,15 @@
 
 namespace App\Controllers;
 
+use App\Models\Post;
+
 class IndexController extends Controller
 {
-    public function __construct()
-    {
-        parent::__construct();
-
-    }
     public function index()
     {
+        $post = new Post()->getPost(1);
+
+        $this->view->smarty->assign('post', $post);
         $this->view->smarty->display('index.tpl');
     }
 }

@@ -6,7 +6,12 @@ services:
     volumes:
       - "./:/var/www/html"
     environment:
-      - PHP_IDE_CONFIG=serverName=${HOST_NAME}
+      DB_HOST: ${DB_HOST}
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASS: ${DB_PASSWORD}
+    depends_on:
+        - mysql
   nginx:
     container_name: "${COMPOSE_PROJECT_NAME}_nginx"
     image: "nginx"
@@ -17,8 +22,6 @@ services:
       - "80:80"
     environment:
       - DEV_DOMAIN=${DEV_DOMAIN}
-      - DEV_CERT=${DEV_CERT}
-      - DEV_KEY=${DEV_KEY}
     depends_on:
       - php
   mysql:
@@ -29,7 +32,7 @@ services:
     ports:
       - "3333:3306"
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: app
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
       MYSQL_USER: user
       MYSQL_PASSWORD: user
