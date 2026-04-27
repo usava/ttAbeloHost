@@ -4,10 +4,10 @@ namespace App\Models;
 
 class Post extends Model
 {
-    private int $id {
+    public int $id {
         get => $this->id;
     }
-    private string $image {
+    public string $image {
         get {
             return $this->image;
         }
@@ -15,7 +15,7 @@ class Post extends Model
             $this->image = $value;
         }
     }
-    private string $title {
+    public string $title {
         get {
             return $this->title;
         }
@@ -23,7 +23,7 @@ class Post extends Model
             $this->title = $value;
         }
     }
-    private string $description {
+    public string $description {
         get {
             return $this->description;
         }
@@ -31,7 +31,7 @@ class Post extends Model
             $this->description = $value;
         }
     }
-    private string $text {
+    public string $text {
         get {
             return $this->text;
         }
@@ -39,7 +39,7 @@ class Post extends Model
             $this->text = $value;
         }
     }
-    private string $views {
+    public string $views {
         get {
             return $this->views;
         }
@@ -48,7 +48,7 @@ class Post extends Model
         }
     }
 
-    private string $created_at {
+    public string $created_at {
         get {
             return $this->created_at;
         }
@@ -57,11 +57,33 @@ class Post extends Model
         }
     }
 
-    public function getPost(int $id)
+    public function get(int $id)
     {
         $hSql = $this->db()->prepare("SELECT * FROM posts WHERE id = :id");
         $hSql->execute([':id' => $id]);
         return $hSql->fetch();
     }
 
+    public function getPosts(array $filter = [])
+    {
+        $prepare[':limit'] = isset($filter['limit']) ? (int) $filter['limit'] : 10;
+
+        $join = $where = '';
+        if(isset($filter['categoryId'])) {
+            $join = "LEFT JOIN category_posts AS cp ON p.id = cp.post_id";
+            $where = "AND cp.category_id = :category_id";
+            $prepare[':category_id'] = $this->id;
+        }
+
+        $sql = $this->db()->prepare("
+            SELECT * FROM posts AS p 
+            $join
+            WHERE 1  $where
+            ORDER BY p.id DESC
+            LIMIT :limit");
+
+        $hSql = $sql->execute($prepare);
+
+        return $hSql->fetchAll();
+    }
 }

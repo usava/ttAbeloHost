@@ -1,25 +1,37 @@
 <html lang="en">
 <head>
     <title>Bloggy</title>
-    <link type="text/css" href="assets/css/style.scss" rel="stylesheet">
+    <link type="text/css" href="style.scss" rel="stylesheet">
 </head>
 <body>
     <main class="container">
         <h1>Bloggy</h1>
+        {foreach $categories as $category}
+        <section class="category-section">
+            <div class="category-header">
+                <h2 class="category-title">{$category->title|upper}</h2>
+                <a href="/category/{$category->id}" class="view-all">View All</a>
+            </div>
 
-        <article class="post-card">
-            <div class="post-image">
-                <img src="assets/{$post->image}" alt="{$post->title}">
+            <div class="posts-grid">
+                {foreach $category->getPosts(3) as $post}
+                <article class="post-card">
+                    <div class="post-image">
+                        <img src="assets/{$post->image}" alt="{$post->title}">
+                    </div>
+                    <div class="post-content">
+                        <h3 class="post-title">{$post->title}</h3>
+                        <time class="post-date">{$post->created_at|date_format:"%B %e, %Y"}</time>
+                        <p class="post-excerpt">
+                            {$post->description|truncate:150:"..."}
+                        </p>
+                        <a href="/post/{$post->id}" class="continue-reading">Continue Reading</a>
+                    </div>
+                </article>
+                {/foreach}
             </div>
-            <div class="post-content">
-                <h3 class="post-title">{$post->title}</h3>
-                <time class="post-date">{$post->created_at|date_format:"%B %e, %Y"}</time>
-                <p class="post-excerpt">
-                    {$post->description|truncate:150:"..."}
-                </p>
-                <a href="/post/{$post->id}" class="continue-reading">Continue Reading</a>
-            </div>
-        </article>
+        </section>
+        {/foreach}
     </main>
 </body>
 </html>
