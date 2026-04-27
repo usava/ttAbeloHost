@@ -10,6 +10,7 @@ services:
       DB_NAME: ${DB_NAME}
       DB_USER: ${DB_USER}
       DB_PASS: ${DB_PASSWORD}
+      POSTS_PAGE_LIMIT: ${POSTS_PAGE_LIMIT}
     depends_on:
         - mysql
   nginx:

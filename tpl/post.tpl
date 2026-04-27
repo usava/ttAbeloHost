@@ -1,7 +1,7 @@
 <html lang="en">
 <head>
     <title>{$post->title}</title>
-    <link type="text/css" href="/style.scss" rel="stylesheet">
+    <link type="text/css" href="/style.css" rel="stylesheet">
 </head>
 <body>
     <main class="container">

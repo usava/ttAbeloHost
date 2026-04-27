@@ -1,7 +1,7 @@
 <html lang="en">
 <head>
     <title>{$category->title}</title>
-    <link type="text/css" href="/style.scss" rel="stylesheet">
+    <link type="text/css" href="/style.css" rel="stylesheet">
 </head>
 <body>
     <main class="container">
@@ -21,10 +21,10 @@
             <div class="control-container">
                 <label for="posts-sorting">Sorting</label>
                 <select id="posts-sorting" name="sort" class="sort" onchange="window.location.href = '?sort=' + this.value">
-                    <option value="views-desc" {if isset($smarty.get.sort) && $smarty.get.sort == 'views-desc'}selected{/if}>Popular first</option>
-                    <option value="views-asc" {if isset($smarty.get.sort) && $smarty.get.sort == 'views-asc'}selected{/if}>Popular last</option>
                     <option value="created-desc" {if isset($smarty.get.sort) && $smarty.get.sort == 'created-desc'}selected{/if}>Newer first</option>
                     <option value="created-asc" {if isset($smarty.get.sort) && $smarty.get.sort == 'created-asc'}selected{/if}>Newer last</option>
+                    <option value="views-desc" {if isset($smarty.get.sort) && $smarty.get.sort == 'views-desc'}selected{/if}>Popular first</option>
+                    <option value="views-asc" {if isset($smarty.get.sort) && $smarty.get.sort == 'views-asc'}selected{/if}>Popular last</option>
                 </select>
             </div>
             <div class="posts-grid">
@@ -44,6 +44,7 @@
                     </article>
                 {/foreach}
             </div>
+            {include file='pagination.tpl'}
         </section>
     </main>
 </body>

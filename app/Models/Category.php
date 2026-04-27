@@ -44,16 +44,15 @@ class Category extends Model
 
     public function getPosts(array $filter)
     {
-        $prepare[':limit'] = isset($filter['limit']) ? (int) $filter['limit'] : 10;
-        $prepare[':offset'] = isset($filter['page']) ? ((int) $filter['page'] - 1) * 10 : 0;
+        $prepare[':limit'] = isset($filter['limit']) ? (int) $filter['limit'] : $_ENV['POSTS_PAGE_LIMIT'];
+        $prepare[':offset'] = isset($filter['page']) ? ((int) $filter['page'] - 1) * $_ENV['POSTS_PAGE_LIMIT'] : 0;
         $prepare[':category_id'] = $this->id;
 
         $orderBy = match($filter['sort']) {
-            'views-desc' => 'p.views DESC',
             'views-asc' => 'p.views ASC',
-            'created-desc' => 'p.created_at DESC',
+            'views-desc' => 'p.views DESC',
             'created-asc' => 'p.created_at ASC',
-            default => 'p.views DESC'
+            default => 'p.created_at DESC'
         };
 
         $sql = $this->db()->prepare("
@@ -65,5 +64,18 @@ class Category extends Model
         $sql->setFetchMode(PDO::FETCH_CLASS, Post::class);
         $sql->execute($prepare);
         return $sql->fetchAll();
+    }
+
+    public function getPostsCount(array $filter): int
+    {
+        $prepare[':category_id'] = $this->id;
+
+        $sql = $this->db()->prepare("
+            SELECT COUNT(p.id) FROM posts AS p
+            LEFT JOIN category_posts AS cp ON p.id = cp.post_id
+            WHERE category_id = :category_id
+            ");
+        $sql->execute($prepare);
+        return (int) $sql->fetch(PDO::FETCH_NUM)[0];
     }
 }
