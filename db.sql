@@ -6,7 +6,8 @@ create table posts
     title       varchar(255) not null,
     description tinytext     null,
     text        text         null,
-    views       tinyint(6)   default 0 comment 'views counter'
+    views       integer(6)   default 0 comment 'views counter',
+    created_at  datetime   default CURRENT_TIMESTAMP comment 'created date'
 );
 
 create table categories

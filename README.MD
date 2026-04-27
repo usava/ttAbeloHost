@@ -18,7 +18,14 @@ Test Task for AbeloHost
    ```
 
 5. Additional setup:
-    - Seed database ...
+    - Seed database 
+        ```bash
+        docker exec -it ttahost_wes_php php import.php
+        ``` 
 
+6. Run Sass:
+   ```bash
+   docker run --rm -v $(pwd):/src -w /src node:alpine npx sass public/style.scss public/style.css
+   ```
 
 6. Access at http://ttahost.loc
