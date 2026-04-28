@@ -33,8 +33,9 @@
     </section>
     <div class="similar-posts">
         <h2>Similar posts</h2>
+        {get_category_posts category_id=$category->id var="category_posts" limit=3 sort="created-asc"}
         <div class="posts-grid">
-            {foreach $category->getPosts(['limit' => 3, 'order'=>'newer-asc']) as $post}
+            {foreach $category_posts as $post}
                 <article class="post-card">
                     <div class="post-image">
                         <img src="/assets/{$post->image}" alt="{$post->title}">

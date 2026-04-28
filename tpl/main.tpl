@@ -10,8 +10,9 @@
                 <a href="/category/{$category->id}" class="view-all">View All</a>
             </div>
 
+            {get_category_posts category_id=$category->id var="category_posts" limit=3 sort="created-desc"}
             <div class="posts-grid">
-                {foreach $category->getPosts(['limit' => 3]) as $post}
+                {foreach $category_posts as $post}
                     <article class="post-card">
                         <div class="post-image">
                             <img src="/assets/{$post->image}" alt="{$post->title}">

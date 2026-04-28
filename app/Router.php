@@ -1,12 +1,11 @@
 <?php
+declare(strict_types=1);
 
-namespace app;
+namespace App;
 
 class Router
 {
     protected array $routes = [];
-    private App $app;
-
     public function __construct() {}
 
     public function add(string $path, string $controller, string $method): void {

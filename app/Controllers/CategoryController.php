@@ -1,11 +1,16 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Controllers;
 
 use App\Models\Category;
+use Smarty\Exception;
 
 class CategoryController extends Controller
 {
+    /**
+     * @throws \Exception
+     */
     public function show(int $id): void
     {
         $category = new Category()->get($id);
@@ -18,31 +23,35 @@ class CategoryController extends Controller
         $postsCount = $category->getPostsCount($filter);
 
         $pagesCount = ceil($postsCount / $filter['limit']);
-        $filter['page'] = min($filter['page'], $pagesCount);
-        $this->pagination($pagesCount, $filter['page']);
+        $filter['page'] = $this->pagination($pagesCount, $filter['page']);
         $posts = $category->getPosts($filter);
 
-        $this->view->smarty->assign('category', $category);
-        $this->view->smarty->assign('posts', $posts);
-        $this->view->smarty->display('category.tpl');
+        $this->smarty->assign('category', $category);
+        $this->smarty->assign('posts', $posts);
+        try {
+            $this->smarty->display('category.tpl');
+        } catch (Exception $e) {
+            echo "Error displaying template: " . $e->getMessage();
+        }
     }
 
     /**
-     * @param $postsCount
-     * @param array $filter
-     * @return void
+     * @param $pagesCount
+     * @param int $page
+     * @return int
      */
-    protected function pagination($pagesCount, int $page): void
+    protected function pagination($pagesCount, int $page): int
     {
         $visiblePages = 5;
         $page_from = max(1, $page - floor($visiblePages / 2));
         $page_to = min($page_from + $visiblePages, $pagesCount);
-        $this->view->smarty->assign([
+        $this->smarty->assign([
             'visible_pages' => $visiblePages,
             'page_offset' => floor($visiblePages / 2),
             'current_page' => $page,
             'range' => range($page_from, $page_to),
         ]);
-        $this->view->smarty->assign('pages_count', $pagesCount);
+        $this->smarty->assign('pages_count', $pagesCount);
+        return min($page, $pagesCount);
     }
 }

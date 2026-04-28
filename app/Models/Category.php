@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Models;
 
@@ -6,27 +7,9 @@ use PDO;
 
 class Category extends Model
 {
-    public int $id {
-        get {
-            return $this->id;
-        }
-    }
-    public string $title {
-        get {
-            return $this->title;
-        }
-        set {
-            $this->title = $value;
-        }
-    }
-    public string $description {
-        get {
-            return $this->description;
-        }
-        set {
-            $this->description = $value;
-        }
-    }
+    public int $id;
+    public string $title;
+    public string $description;
 
     public function get(int $id)
     {
@@ -42,7 +25,7 @@ class Category extends Model
         return $hSql->fetchAll(PDO::FETCH_CLASS, Category::class);
     }
 
-    public function getPosts(array $filter)
+    public function getPosts(array $filter = []): array
     {
         $prepare[':limit'] = isset($filter['limit']) ? (int) $filter['limit'] : $_ENV['POSTS_PAGE_LIMIT'];
         $prepare[':offset'] = isset($filter['page']) ? ((int) $filter['page'] - 1) * $_ENV['POSTS_PAGE_LIMIT'] : 0;

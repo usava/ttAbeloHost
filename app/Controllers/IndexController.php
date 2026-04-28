@@ -1,19 +1,25 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Controllers;
 
 use App\Models\Category;
-use App\Models\Post;
+use Smarty\Exception;
 
 class IndexController extends Controller
 {
-    public function index()
+    /**
+     * @throws \Exception
+     */
+    public function index(): void
     {
-        $post = new Post()->get(1);
         $categories = new Category()->getAll();
+        $this->smarty->assign('categories', $categories);
 
-        $this->view->smarty->assign('categories', $categories);
-        $this->view->smarty->assign('post', $post);
-        $this->view->smarty->display('index.tpl');
+        try {
+            $this->smarty->display('main.tpl');
+        } catch (Exception $e) {
+            echo "Error displaying template: " . $e->getMessage();
+        }
     }
 }

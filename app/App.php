@@ -13,17 +13,11 @@ class App
     protected Router $router;
     public function __construct()
     {
-        if(!is_null(self::$app)) {
-            return self::$app;
-        }
-
         $this->router = new Router();
         $this->initRoutes();
-
-        return $this;
     }
 
-    public function route()
+    public function route(): void
     {
         $this->router->parse($_SERVER['REQUEST_URI']);
     }
