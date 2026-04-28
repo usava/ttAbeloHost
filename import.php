@@ -9,9 +9,9 @@ $db = new DB()->getInstance();
 print "Reseting tables";
 
 $db->exec("SET FOREIGN_KEY_CHECKS = 0;");
-$db->exec("DROP TABLE posts;");
-$db->exec("DROP TABLE categories;");
-$db->exec("DROP TABLE category_posts;");
+$db->exec("DROP TABLE IF EXISTS posts;");
+$db->exec("DROP TABLE IF EXISTS categories;");
+$db->exec("DROP TABLE IF EXISTS category_posts;");
 
 print "Creating tables";
 

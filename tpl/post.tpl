@@ -23,6 +23,7 @@
             </article>
         </section>
         <div class="similar-posts">
+            <h2>Similar posts</h2>
             <div class="posts-grid">
                 {foreach $category->getPosts(['limit' => 3]) as $post}
                     <article class="post-card">
