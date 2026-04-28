@@ -29,6 +29,7 @@ class Controller
     public function initFunctions(): void
     {
         $this->smarty->registerPlugin('function', 'get_category_posts', [$this, 'getCategoryPosts']);
+        $this->smarty->registerPlugin("function", "url", [$this, 'getUrl']);
     }
 
     public function getCategoryPosts($params, $smarty): void
@@ -43,5 +44,22 @@ class Controller
         $posts = $category ? $category->getPosts($params) : [];
 
         $smarty->assign($params['var'], $posts);
+    }
+
+    public function getUrl($params): string
+    {
+        $urlParams = $_GET;
+
+        foreach ($params as $key => $value) {
+            if ($value === null) {
+                unset($urlParams[$key]);
+            } else {
+                $urlParams[$key] = $value;
+            }
+        }
+
+        $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+
+        return $path . ($urlParams ? '?' . http_build_query($urlParams) : '');
     }
 }

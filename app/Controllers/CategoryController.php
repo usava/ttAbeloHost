@@ -18,8 +18,8 @@ class CategoryController extends Controller
         $filter = [];
         parse_str($_SERVER['QUERY_STRING'], $queryParams);
         $filter['sort'] = $queryParams['sort'] ?? '';
-        $filter['page'] = $queryParams['page'] ?? 1;
-        $filter['limit'] = $_ENV['POSTS_PAGE_LIMIT'] ?? 3;
+        $filter['page'] =  (int) ($queryParams['page'] ?? 1);
+        $filter['limit'] = (int) ($_ENV['POSTS_PAGE_LIMIT'] ?? 3);
         $postsCount = $category->getPostsCount($filter);
 
         $pagesCount = ceil($postsCount / $filter['limit']);
