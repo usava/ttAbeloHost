@@ -3,6 +3,8 @@
 Test Task for AbeloHost
 ## Quick Start
 
+0. Rename `.env.example` to `.env` and set your own values.
+
 1. Start the development environment:
    ```bash
    docker-compose up -d
